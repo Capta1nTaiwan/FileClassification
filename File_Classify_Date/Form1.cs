@@ -28,22 +28,18 @@ namespace File_Classify_Date
 
         private void DoClassifyBtn_Click(object sender, EventArgs e)
         {
-            string[] allfiles = new string[999999];
-            try
-            {
-                allfiles = Directory.GetFiles(tbxPath.Text, "*.*", SearchOption.AllDirectories);
-            }
-            catch (DirectoryNotFoundException ex)
+            if (!Directory.Exists(tbxPath.Text))
             {
                 MessageBox.Show("路徑錯誤，請檢查");
                 return;
             }
-            
+
+            string[] allfiles = Directory.GetFiles(tbxPath.Text, "*.*", SearchOption.AllDirectories);
             foreach (var file in allfiles)
             {
                 FileInfo info = new FileInfo(file);
                 DateTime Date = info.LastWriteTime;
-                string DateOfFile = Date.Year + "-" + Date.Month + "-" + Date.Day;
+                string DateOfFile = Date.Year + "." + Date.Month + "." + Date.Day;
 
                 if (!Directory.Exists(Path.Combine(tbxPath.Text, DateOfFile)))
                 {
